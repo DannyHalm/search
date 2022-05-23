@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable,Subject } from 'rxjs';
+import { Observable,Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import { Breed } from 'src/app/interfaces/breed.interface';
 import { DogInfoInterface } from 'src/app/interfaces/doginfo.interface';
