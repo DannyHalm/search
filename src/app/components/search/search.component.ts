@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable,Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import { Breed } from 'src/app/interfaces/breed.interface';
+import { DogInfoInterface } from 'src/app/interfaces/doginfo.interface';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { SearchService } from 'src/app/services/search.service';
 export class SearchComponent implements OnInit {
       searchSubject$ = new Subject<string>();
       allBreeds$ = new Subject<Breed[]>();
+      breedInfo$ = new Subject<DogInfoInterface[]>();
       results$ = new Observable<Breed[]>();
       searchString:string ="";
   constructor(private searchService:SearchService) {
@@ -22,10 +24,9 @@ export class SearchComponent implements OnInit {
         debounceTime(1000),
         distinctUntilChanged()
       )).subscribe((d)=>{
-        console.log(d);
         this.queryForBreed(d);
       });
-      
+
   }
 
   update($event:any){
@@ -44,10 +45,20 @@ export class SearchComponent implements OnInit {
         error:(error:any)=> console.log(error),
         complete:()=> console.log("Done retrieving Breeds")
        }
-      )
-      ;
+      );
   }
-
+  getExtraInfo(){
+    this.searchService.searchExtraInfo(this.searchString)
+     .subscribe(
+       {
+        next:(resultInfo:DogInfoInterface[]) => {
+          console.log("received breed info", resultInfo);
+          this.breedInfo$.next(resultInfo);},
+        error:(error:any)=> console.log(error),
+        complete:()=> console.log(`Done retrieving info about ${this.searchString}`)
+       }
+      );
+  }
     queryAllBreed():void {
      //this.searchService.searchAllBreads();
       // .subscribe({

@@ -1,33 +1,41 @@
 <div class="container">
-  <div class="col-md-6 bg-light border-light jumbotron">
-    <div>
-      <input type="search" 
-      class="p2 border rounded-pill"     
-      name="inputSearch" 
-      autofocus 
-      placeholder=" Woof woof..."
-      (keyup)="update($event)"
-      />
+  <div class="row">
+      <div class="col-md-6 bg-light border-light">
+        <div>
+          <input type="search"
+          class="p2 border rounded-pill"
+          name="inputSearch"
+          autofocus
+          placeholder=" Woof woof..."
+          (keyup)="update($event)"
+          />
+      </div>
+   </div>
+ </div>
+ <div class=" col-md-6 bg-light border-light" *ngIf="breedInfo$ | async as newBreed">
+      <p><a class="btn btn-primary hero-button plat"
+            role="button"
+            (click)="getExtraInfo()"
+            >Woof more info...
+          </a></p>
+          <div *ngFor="let newBreed of breedInfo$ | async">
+          <h5 class="hero-title">
+            {{newBreed.name | uppercase }}</h5>
+          <p class="hero-subtitle">Characteristic: {{newBreed.bred_for}}</p>
+          <p>Life Span: {{newBreed.life_span}}</p>
+          <p>Temperament: {{newBreed.temperament}}</p>
+       </div>
   </div>
-  <div class=" col-md-6 bg-light border-light jumbotron" >
-      <h4 class="hero-title" >
-        {{searchString | uppercase }}</h4>
-      <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-      <p><a class="btn btn-primary hero-button plat" role="button" href="#">Woof more info...</a></p>
-  </div>
-  </div>
-    <div class="col-md-6">
-        <app-search-body></app-search-body>
-    </div>
+ <div class="row">
     <div class="col-md-6" *ngIf="searchString">
       <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
   <div class="carousel-inner">
-   <div class="carousel-item active" 
+   <div class="carousel-item active"
         *ngFor="let breed of allBreeds$ | async">
     <img [src]="breed" class="d-block w-100 h-150" alt="...">
   </div>
@@ -41,7 +49,8 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-</div>
+    </div>
+ </div>
 </div>
 
 
