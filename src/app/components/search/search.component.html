@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="col-md-6 bg-light border-light jumbotron">
+    <div>
+      <input type="search" 
+      class="p2 border rounded-pill"     
+      name="inputSearch" 
+      autofocus 
+      placeholder=" Woof woof..."
+      (keyup)="update($event)"
+      />
+  </div>
+  <div class=" col-md-6 bg-light border-light jumbotron" >
+      <h4 class="hero-title" >
+        {{searchString | uppercase }}</h4>
+      <p class="hero-subtitle">Nullam id dolor id nibh ultricies vehicula ut id elit. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+      <p><a class="btn btn-primary hero-button plat" role="button" href="#">Woof more info...</a></p>
+  </div>
+  </div>
+    <div class="col-md-6">
+        <app-search-body></app-search-body>
+    </div>
+    <div class="col-md-6" *ngIf="searchString">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+   <div class="carousel-item active" 
+        *ngFor="let breed of allBreeds$ | async">
+    <img [src]="breed" class="d-block w-100 h-150" alt="...">
+  </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</div>
+</div>
+
+
