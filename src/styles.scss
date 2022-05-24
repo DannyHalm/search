@@ -42,6 +42,12 @@
 }
 
 * {
-  /*box-sizing: inherit;*/
+  box-sizing: inherit;
+}
+
+.topDiv{
+  background-image: url('../../../assets/doggy.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 

@@ -49,24 +49,12 @@ export class SearchComponent implements OnInit {
      .subscribe(
        {
         next:(resultInfo:DogInfoInterface[]) => {
-          console.log("received breed info", resultInfo);
+          // console.log("received breed info", resultInfo);
           this.breedInfo$.next(resultInfo);},
         error:(error:any)=> console.log(error),
         complete:()=> console.log(`Done retrieving info about ${this.searchString}`)
        }
       );
   }
-    queryAllBreed():void {
-     //this.searchService.searchAllBreads();
-      // .subscribe({
-      //   next:(response) => this.allBreeds$.next(response),
-      //   error:(error:any)=> console.log(error),
-      //   complete:()=> console.log("Done retrieving Breeds")
-      // })
-      ;
-    }
-}
-function next(next: any, arg1: (res: Breed[]) => void, error: any, arg3: (error: any) => void, complete: any, arg5: () => void) {
-  throw new Error('Function not implemented.');
 }
 

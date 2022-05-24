@@ -47,7 +47,7 @@
       </div>
     <div class="col-md-4 bg-light border-dark" >
       <div>
-        <div *ngFor="let newBreed of breedInfo$ | async">
+          <div *ngFor="let newBreed of breedInfo$ | async">
             <h5 class="hero-title">{{newBreed.name | uppercase }}</h5>
             <p class="hero-subtitle"><b> {{newBreed.bred_for}} </b></p>
             <p><b>Life Span:</b> {{newBreed.life_span}}</p>
