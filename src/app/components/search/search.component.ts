@@ -1,6 +1,7 @@
+import { MapType } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Observable,Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap, tap} from 'rxjs/operators';
 import { Breed } from 'src/app/interfaces/breed.interface';
 import { DogInfoInterface } from 'src/app/interfaces/doginfo.interface';
 import { SearchService } from 'src/app/services/search.service';
@@ -21,33 +22,29 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
       this.searchSubject$.pipe((
-        debounceTime(1000),
-        distinctUntilChanged()
-      )).subscribe((d)=>{
-        this.queryForBreed(d);
-      });
-
+        debounceTime(200),
+        distinctUntilChanged(),
+        switchMap((text: string) => {
+          return this.searchService.searchForTerm(text);
+        }))
+        ).subscribe({
+            next:(
+                  tap((res) => console.log('All breeds:',res)),
+                  (res:Breed[]) => {this.allBreeds$.next(res)
+                   this.getExtraInfo()}
+                  ),
+            error: (error:any) => console.log(error),
+            complete:()=> console.log("Done retrieving Breeds")
+       })
   }
 
   update($event:any){
     const value = $event.target.value;
     this.searchString = value;
-    this.searchSubject$.next(value)
+    this.searchSubject$.next(this.searchString)
   }
 
-  queryForBreed(searchString:string): void {
-     this.searchService.searchForTerm(searchString)
-      .subscribe(
-       {
-        next:(response) => {
-          console.log("new response:",response);
-          this.allBreeds$.next(response);},
-        error:(error:any)=> console.log(error),
-        complete:()=> console.log("Done retrieving Breeds")
-       }
-      );
-  }
-  getExtraInfo(){
+ getExtraInfo(){
     this.searchService.searchExtraInfo(this.searchString)
      .subscribe(
        {
@@ -69,3 +66,7 @@ export class SearchComponent implements OnInit {
       ;
     }
 }
+function next(next: any, arg1: (res: Breed[]) => void, error: any, arg3: (error: any) => void, complete: any, arg5: () => void) {
+  throw new Error('Function not implemented.');
+}
+

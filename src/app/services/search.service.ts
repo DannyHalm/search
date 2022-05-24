@@ -16,11 +16,13 @@ export class SearchService {
    }
 
   searchForTerm(searchString:string): Observable<any>{
-    return this.http.get<Breed>(`https://dog.ceo/api/breed/${searchString}/images`).pipe(
+    return this.http.get<Breed>(`https://dog.ceo/api/breed/${searchString}/images`)
+    .pipe(
       map((breed) => {
-      //console.log(breed);
+      console.log(breed);
       return breed.message;
-    }));
+    }))
+    ;
   }
 
   // searchAllBreads() : Observable<Breed>{
